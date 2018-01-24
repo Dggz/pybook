@@ -1,5 +1,5 @@
 
-import ipdb; ipdb.set_trace()
+
 class Pair:
     def __init__(self, x, y):
         self.x = x
@@ -14,26 +14,18 @@ pr
 print(pr)
 print('p is {0!r}'.format(pr))
 print('p is {0}'.format(pr))
+# !r takes the __repr__
 
-import ipdb; ipdb.set_trace()
 
-# if you have a lot of instances
-class Date:
-    __slots__ = ['year', 'month', 'day']
-    def __init__(self, year, month, day):
-        self.year = year
-        self.month = month
-        self.day = day
-
-import ipdb; ipdb.set_trace()
-
-_formats = {
+formats_ = {
     'ymd' : '{d.year}-{d.month}-{d.day}',
     'mdy' : '{d.month}/{d.day}/{d.year}',
     'dmy' : '{d.day}/{d.month}/{d.year}'
     }
 
+# if you have a lot of instances use __slots__
 class Date:
+    __slots__ = ['year', 'month', 'day']
     def __init__(self, year, month, day):
         self.year = year
         self.month = month
@@ -42,8 +34,9 @@ class Date:
     def __format__(self, code):
         if code == '':
             code = 'ymd'
-        fmt = _formats[code]
+        fmt = formats_[code]
         return fmt.format(d=self)
+
 
 #
 #  Defineste cum va arata o instanta cand e un argument a functiei format
@@ -54,8 +47,9 @@ format(dt)
 format(dt, 'mdy')
 'The date is {:ymd}'.format(dt)
 'The date is {:mdy}'.format(dt)
+'The date is {:dmy}'.format(dt)
 
-import ipdb; ipdb.set_trace()
+
 
 from socket import socket, AF_INET, SOCK_STREAM
 
@@ -90,20 +84,7 @@ with conn as s:
     print(resp)
     # conn.__exit__() executes: connection closed
 
-import ipdb; ipdb.set_trace()
 
-class Date:
-    __slots__ = ['year', 'month', 'day']
-    def __init__(self, year, month, day):
-        self.year = year
-        self.month = month
-        self.day = day
-
-import ipdb; ipdb.set_trace()
-
-lambda_ = 2.0
-
-import ipdb; ipdb.set_trace()
 
 # managed attributes
 class Person:
@@ -126,6 +107,7 @@ class Person:
     @first_name.deleter
     def first_name(self):
         raise AttributeError("Can't delete attribute")
+
 
 ps = Person('Guido')
 ps.first_name       # Calls the getter
@@ -157,7 +139,6 @@ class SubPerson(Person):
 
 sp = SubPerson('Guido')
 
-import ipdb; ipdb.set_trace()
 
 import math
 class Circle:
@@ -184,11 +165,13 @@ class Integer:
     def __init__(self, name):
         self.name = name
 
+    #  diff between instance variable and class variables
     def __get__(self, instance, cls):
         if instance is None:
             return self
         else:
             return instance.__dict__[self.name]
+    #
 
     def __set__(self, instance, value):
         if not isinstance(value, int):
@@ -212,5 +195,20 @@ Point.x  # Calls Point.
 import ipdb; ipdb.set_trace()
 print()
 
+lazy_prop = 'http://chimera.labs.oreilly.com/books/1230000000393/ch08.html#_solution_128'
+data_structs = 'http://chimera.labs.oreilly.com/books/1230000000393/ch08.html#_problem_129'
+abstract_stuff = 'http://chimera.labs.oreilly.com/books/1230000000393/ch08.html#_problem_130'
+"""
+Although ABCs facilitate type checking, it’s not something that you should overuse in a program.
+At its heart, Python is a dynamic language that gives you great flexibility. 
+Trying to enforce type constraints everywhere tends to result in code that is more complicated
+than it needs to be. You should embrace Python’s flexibility.
+"""
+data_or_type_system = 'http://chimera.labs.oreilly.com/books/1230000000393/ch08.html#_problem_131'
+custom_containers = 'http://chimera.labs.oreilly.com/books/1230000000393/ch08.html#_problem_132'
+attr_access = 'http://chimera.labs.oreilly.com/books/1230000000393/ch08.html#_problem_133'
+no_init = 'http://chimera.labs.oreilly.com/books/1230000000393/ch08.html#_problem_135'
+mixins = 'http://chimera.labs.oreilly.com/books/1230000000393/ch08.html#_problem_136'
 
+state_machines_or_objects = 'http://chimera.labs.oreilly.com/books/1230000000393/ch08.html#_problem_137'
 
