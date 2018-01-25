@@ -299,3 +299,50 @@ mixins = 'http://chimera.labs.oreilly.com/books/1230000000393/ch08.html#_problem
 
 state_machines_or_objects = 'http://chimera.labs.oreilly.com/books/1230000000393/ch08.html#_problem_137'
 
+class Connection:
+    def __init__(self):
+        self.new_state(ClosedConnection)
+
+    def new_state(self, newstate):
+        self.__class__ = newstate
+
+    def read(self):
+        raise NotImplementedError()
+
+    def write(self, data):
+        raise NotImplementedError()
+
+    def open(self):
+        raise NotImplementedError()
+
+    def close(self):
+        raise NotImplementedError()
+
+class ClosedConnection(Connection):
+    def read(self):
+        raise RuntimeError('Not open')
+
+    def write(self, data):
+        raise RuntimeError('Not open')
+
+    def open(self):
+        self.new_state(OpenConnection)
+
+    def close(self):
+        raise RuntimeError('Already closed')
+
+class OpenConnection(Connection):
+    def read(self):
+        print('reading')
+
+    def write(self, data):
+        print('writing')
+
+    def open(self):
+        raise RuntimeError('Already open')
+
+    def close(self):
+        self.new_state(ClosedConnection)
+
+
+visitor = 'http://chimera.labs.oreilly.com/books/1230000000393/ch08.html#_problem_139'
