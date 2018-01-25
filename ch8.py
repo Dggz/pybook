@@ -152,7 +152,6 @@ class Circle:
         return 2 * math.pi * self.radius
 
 
-import ipdb; ipdb.set_trace()
 
 # Descriptor attribute for an integer type-checked attribute
 """
@@ -192,11 +191,75 @@ pt = Point(2,3)
 pt.x      # Calls Point.x.__get__(p, Point)
 Point.x  # Calls Point.
 
-import ipdb; ipdb.set_trace()
-print()
 
 lazy_prop = 'http://chimera.labs.oreilly.com/books/1230000000393/ch08.html#_solution_128'
+
+class lazyproperty:
+    def __init__(self, func):
+        self.func = func
+
+    def __get__(self, instance, cls):
+        if instance is None:
+            return self
+        else:
+            value = self.func(instance)
+            setattr(instance, self.func.__name__, value)
+            return value
+
+import math
+
+class Circle:
+    def __init__(self, radius):
+        self.radius = radius
+
+    @lazyproperty
+    def area(self):
+        print('Computing area')
+        return math.pi * self.radius ** 2
+
+    @lazyproperty
+    def perimeter(self):
+        print('Computing perimeter')
+        return 2 * math.pi * self.radius
+
+
 data_structs = 'http://chimera.labs.oreilly.com/books/1230000000393/ch08.html#_problem_129'
+
+"""
+Useful when writing a program built around a large number 
+of small data structures. It leads to much less code than manually 
+writing __init__().
+
+Downside on documentation and IDE help
+"""
+
+class Structure:
+    # Class variable that specifies expected fields
+    _fields= []
+    def __init__(self, *args):
+        if len(args) != len(self._fields):
+            raise TypeError('Expected {} arguments'.format(len(self._fields)))
+
+        # Set the arguments
+        for name, value in zip(self._fields, args):
+            setattr(self, name, value)
+
+
+# Example class definitions
+if __name__ == '__main__':
+    class Stock(Structure):
+        _fields = ['name', 'shares', 'price']
+
+    class Point(Structure):
+        _fields = ['x','y']
+
+    class Circle(Structure):
+        _fields = ['radius']
+        def area(self):
+            return math.pi * self.radius ** 2
+
+
+
 abstract_stuff = 'http://chimera.labs.oreilly.com/books/1230000000393/ch08.html#_problem_130'
 """
 Although ABCs facilitate type checking, it’s not something that you should overuse in a program.
@@ -204,7 +267,31 @@ At its heart, Python is a dynamic language that gives you great flexibility.
 Trying to enforce type constraints everywhere tends to result in code that is more complicated
 than it needs to be. You should embrace Python’s flexibility.
 """
+
+from abc import ABCMeta, abstractmethod
+
+class IStream(metaclass=ABCMeta):
+    @abstractmethod
+    def read(self, maxbytes=-1):
+        pass
+
+    @abstractmethod
+    def write(self, data):
+        pass
+
+# istrm = IStream()
+
+class SocketStream(IStream):
+    def read(self, maxbytes=-1):
+        print(maxbytes)
+
+    def write(self, data):
+        print(data)
+
+
 data_or_type_system = 'http://chimera.labs.oreilly.com/books/1230000000393/ch08.html#_problem_131'
+
+
 custom_containers = 'http://chimera.labs.oreilly.com/books/1230000000393/ch08.html#_problem_132'
 attr_access = 'http://chimera.labs.oreilly.com/books/1230000000393/ch08.html#_problem_133'
 no_init = 'http://chimera.labs.oreilly.com/books/1230000000393/ch08.html#_problem_135'
