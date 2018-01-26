@@ -4,10 +4,12 @@ class Pair:
     def __init__(self, x, y):
         self.x = x
         self.y = y
+
     def __repr__(self):
-        return 'Pair({0.x!r}, {0.y!r})'.format(self)
+        return 'Pair({0.x}, {0.y})'.format(self)
+
     def __str__(self):
-        return '({0.x!s}, {0.y!s})'.format(self)
+        return '({0.x}, {0.y})'.format(self)
 
 pr = Pair(3, 4)
 pr
@@ -37,7 +39,6 @@ class Date:
         fmt = formats_[code]
         return fmt.format(d=self)
 
-
 #
 #  Defineste cum va arata o instanta cand e un argument a functiei format
 #
@@ -48,7 +49,6 @@ format(dt, 'mdy')
 'The date is {:ymd}'.format(dt)
 'The date is {:mdy}'.format(dt)
 'The date is {:dmy}'.format(dt)
-
 
 
 from socket import socket, AF_INET, SOCK_STREAM
@@ -85,7 +85,6 @@ with conn as s:
     # conn.__exit__() executes: connection closed
 
 
-
 # managed attributes
 class Person:
     def __init__(self, first_name):
@@ -119,25 +118,54 @@ Don't use these as you would use getters/setters in java
 also don't use it the same way for a different attribute (property on first_name and last_name)
 
 use them if you need extra processing
+
+setters and getters can be used explicitly for integration
 """
 
-class SubPerson(Person):
+class BadPerson:
+    def __init__(self, first_name, last_name):
+        self.first_name = first_name
+        self.last_name = last_name
+
     @property
-    def name(self):
-        print('Getting name')
-        return super().name
+    def first_name(self):
+        return self._first_name
 
-    @name.setter
-    def name(self, value):
-        print('Setting name to', value)
-        super(SubPerson, SubPerson).name.__set__(self, value)
+    @first_name.setter
+    def first_name(self, value):
+        if not isinstance(value, str):
+            raise TypeError('Expected a string')
+        self._first_name = value
 
-    @name.deleter
-    def name(self):
-        print('Deleting name')
-        super(SubPerson, SubPerson).name.__delete__(self)
+    # Repeated property code, but for a different name (bad!)
+    @property
+    def last_name(self):
+        return self._last_name
 
-sp = SubPerson('Guido')
+    @last_name.setter
+    def last_name(self, value):
+        if not isinstance(value, str):
+            raise TypeError('Expected a string')
+        self._last_name = value
+
+#
+# class SubPerson(Person):
+#     @property
+#     def name(self):
+#         print('Getting name')
+#         return super().first_name
+#
+#     @name.setter
+#     def name(self, value):
+#         print('Setting name to', value)
+#         super(SubPerson, SubPerson).first_name.__set__(self, value)
+#
+#     @name.deleter
+#     def name(self):
+#         print('Deleting name')
+#         super(SubPerson, SubPerson).first_name.__delete__(self)
+#
+# sp = SubPerson('Guido')
 
 
 import math
@@ -299,6 +327,7 @@ mixins = 'http://chimera.labs.oreilly.com/books/1230000000393/ch08.html#_problem
 
 state_machines_or_objects = 'http://chimera.labs.oreilly.com/books/1230000000393/ch08.html#_problem_137'
 
+
 class Connection:
     def __init__(self):
         self.new_state(ClosedConnection)
@@ -318,6 +347,7 @@ class Connection:
     def close(self):
         raise NotImplementedError()
 
+
 class ClosedConnection(Connection):
     def read(self):
         raise RuntimeError('Not open')
@@ -330,6 +360,7 @@ class ClosedConnection(Connection):
 
     def close(self):
         raise RuntimeError('Already closed')
+
 
 class OpenConnection(Connection):
     def read(self):
@@ -346,3 +377,12 @@ class OpenConnection(Connection):
 
 
 visitor = 'http://chimera.labs.oreilly.com/books/1230000000393/ch08.html#_problem_139'
+
+
+#
+#       THE TWO TYPES OF DESCRIPTORS
+#
+#       GETATTR AND GETATTRIBUTE
+#
+#
+#

@@ -1,0 +1,9 @@
+
+#
+#
+#       THE TWO TYPES OF DESCRIPTORS
+#
+#       GETATTR AND GETATTRIBUTE
+#
+#
+
