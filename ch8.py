@@ -148,25 +148,6 @@ class BadPerson:
             raise TypeError('Expected a string')
         self._last_name = value
 
-#
-# class SubPerson(Person):
-#     @property
-#     def name(self):
-#         print('Getting name')
-#         return super().first_name
-#
-#     @name.setter
-#     def name(self, value):
-#         print('Setting name to', value)
-#         super(SubPerson, SubPerson).first_name.__set__(self, value)
-#
-#     @name.deleter
-#     def name(self):
-#         print('Deleting name')
-#         super(SubPerson, SubPerson).first_name.__delete__(self)
-#
-# sp = SubPerson('Guido')
-
 
 import math
 class Circle:
@@ -377,12 +358,3 @@ class OpenConnection(Connection):
 
 
 visitor = 'http://chimera.labs.oreilly.com/books/1230000000393/ch08.html#_problem_139'
-
-
-#
-#       THE TWO TYPES OF DESCRIPTORS
-#
-#       GETATTR AND GETATTRIBUTE
-#
-#
-#
