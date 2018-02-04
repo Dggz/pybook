@@ -32,10 +32,10 @@ attributes it needs, for example, object.__getattribute__(self, name).
 
 
 class Count(object):
-    def __init__(self,mymin,mymax):
-        self.mymin=mymin
-        self.mymax=mymax
-        self.current=None
+    def __init__(self, mymin, mymax):
+        self.mymin = mymin
+        self.mymax = mymax
+        self.current = None
 
     # def __getattr__(self, item):
     #         self.__dict__[item]=0
@@ -44,11 +44,12 @@ class Count(object):
     def __getattribute__(self, item):
         if item.startswith('cur'):
             raise AttributeError
-        return object.__getattribute__(self,item)
+        return object.__getattribute__(self, item)
         # or you can use ---return super().__getattribute__(item)
         # note this class subclass object
 
-obj1 = Count(1,10)
+
+obj1 = Count(1, 10)
 print(obj1.mymin)
 print(obj1.mymax)
 print(obj1.current)
@@ -101,6 +102,7 @@ class Integer:
 class Point:
     x = Integer('x')
     y = Integer('y')
+
     def __init__(self, x, y):
         self.x = x
         self.y = y
@@ -135,6 +137,7 @@ def countdown(n: int):
 @timethis
 def sum_(number: int):
     return sum(range(number))
+
 
 """Decorator unwrap"""
 
@@ -360,3 +363,6 @@ def spam(x, y, z=42):
 "Decorators that add arguments to wrapped functions"
 "https://web.archive.org/web/20171130045115/http://chimera.labs.oreilly.com/books/1230000000393/ch09.html#_problem_154"
 
+"? https://web.archive.org/web/20171130045115/http://chimera.labs.oreilly.com/books/1230000000393/ch09.html#_solution_155"
+
+"https://web.archive.org/web/20171130045115/http://chimera.labs.oreilly.com/books/1230000000393/ch09.html#_problem_160"
