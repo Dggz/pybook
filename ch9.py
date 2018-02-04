@@ -366,3 +366,8 @@ def spam(x, y, z=42):
 "? https://web.archive.org/web/20171130045115/http://chimera.labs.oreilly.com/books/1230000000393/ch09.html#_solution_155"
 
 "https://web.archive.org/web/20171130045115/http://chimera.labs.oreilly.com/books/1230000000393/ch09.html#_problem_160"
+
+"https://web.archive.org/web/20171130045115/http://chimera.labs.oreilly.com/books/1230000000393/ch09.html#_problem_161"
+
+"""Fix repetitive properties"""
+"https://web.archive.org/web/20171130045115/http://chimera.labs.oreilly.com/books/1230000000393/ch09.html#_solution_164"
