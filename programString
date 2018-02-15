@@ -1,0 +1,12 @@
+array char str[];
+char c;
+
+str = "hello world";
+c = 'c';
+
+write str;
+
+array int nr[2];
+
+nr[0] = a + 2;
+nr[1] = b;

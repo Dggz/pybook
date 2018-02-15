@@ -1,0 +1,8 @@
+int c;
+
+c = 10;
+
+while (c * (2 - 3) > 5) {
+	write c;
+	c = c - 1;
+}
