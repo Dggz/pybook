@@ -3,5 +3,5 @@ func int adunare(int a, int b) {
 }
 
 int c;
-{}
+
 c = adunare(2 * (2 - 1), 3) - 1;

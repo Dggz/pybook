@@ -35,18 +35,16 @@ class Count(object):
     def __init__(self, mymin, mymax):
         self.mymin = mymin
         self.mymax = mymax
-        self.current = None
+        self.actual = None
 
-    # def __getattr__(self, item):
-    #         self.__dict__[item]=0
-    #         return 0
+    def __getattr__(self, item):
+            self.__dict__[item]=0
+            return 0
 
     def __getattribute__(self, item):
-        if item.startswith('cur'):
+        if item.startswith('ac'):
             raise AttributeError
         return object.__getattribute__(self, item)
-        # or you can use ---return super().__getattribute__(item)
-        # note this class subclass object
 
 
 obj1 = Count(1, 10)
@@ -116,7 +114,7 @@ import time
 from functools import wraps
 def timethis(func):
     """Decorator that reports the execution time."""
-    """annotations and stuff"""
+    """annotations and stuff __name__ __doc__ __annotations__"""
     # @wraps(func)
     def wrapper(*args, **kwargs):
         start = time.time()
@@ -167,21 +165,20 @@ def decorator2(func):
 def add(x, y):
     return x + y
 
+# .__wrapped__
 
 """Decorators that accept arguments"""
 
 from functools import wraps
 import logging
-def logged(level, name=None, message=None):
+def logged(level, message=None):
     '''
     Add logging to a function.  level is the logging
-    level, name is the logger name, and message is the
-    log message.  If name and message aren't specified,
+    level, message is the log message. If message isn't specified,
     they default to the function's module and name.
     '''
     def decorate(func):
-        logname = name if name else func.__module__
-        log = logging.getLogger(logname)
+        log = logging.getLogger(func.__module__)
         logmsg = message if message else func.__name__
 
         @wraps(func)
@@ -192,7 +189,7 @@ def logged(level, name=None, message=None):
     return decorate
 
 # Example use
-@logged(logging.DEBUG)
+@logged(logging.ERROR)
 def add(x, y):
     return x + y
 
@@ -372,4 +369,129 @@ def spam(x, y, z=42):
 """Fix repetitive properties"""
 "https://web.archive.org/web/20171130045115/http://chimera.labs.oreilly.com/books/1230000000393/ch09.html#_solution_164"
 
+
+class Person:
+    def __init__(self, name ,age):
+        self.name = name
+        self.age = age
+
+    @property
+    def name(self):
+        return self._name
+
+    @name.setter
+    def name(self, value):
+        if not isinstance(value, str):
+            raise TypeError('name must be a string')
+        self._name = value
+
+    @property
+    def age(self):
+        return self._age
+
+    @age.setter
+    def age(self, value):
+        if not isinstance(value, int):
+            raise TypeError('age must be an int')
+        self._age = value
+
+
+def typed_property(name, expected_type):
+    storage_name = '_' + name
+
+    @property
+    def prop(self):
+        return getattr(self, storage_name)
+
+    @prop.setter
+    def prop(self, value):
+        if not isinstance(value, expected_type):
+            raise TypeError('{} must be a {}'.format(name, expected_type))
+        setattr(self, storage_name, value)
+    return prop
+
+# Example use
+class Person:
+    name = typed_property('name', str)
+    age = typed_property('age', int)
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+
+from functools import partial
+
+String = partial(typed_property, expected_type=str)
+Integer = partial(typed_property, expected_type=int)
+
+# Example:
+class Person:
+    name = String('name')
+    age = Integer('age')
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+
+# Context managers
+
+
+import time
+from contextlib import contextmanager
+
+@contextmanager
+def timethis(label):
+    start = time.time()
+    try:
+        yield
+    finally:
+        end = time.time()
+        print('{}: {}'.format(label, end - start))
+
+# Example use
+with timethis('counting'):
+    n = 10000000
+    while n > 0:
+        n -= 1
+
+
+@contextmanager
+def list_transaction(orig_list):
+    working = list(orig_list)
+    yield working
+    orig_list[:] = working
+
+
+# items = [1, 2, 3]
+# with list_transaction(items) as working:
+#     working.append(4)
+#     working.append(5)
+#
+# items
+# with list_transaction(items) as working:
+#     working.append(6)
+#     working.append(7)
+#     raise RuntimeError('oops')
+#
+# Traceback (most recent call last):
+#   File "<stdin>", line 4, in <module>
+# RuntimeError: oops
+# items
+# [1, 2, 3, 4, 5]
+
+import time
+
+class timethis:
+    def __init__(self, label):
+        self.label = label
+    def __enter__(self):
+        self.start = time.time()
+    def __exit__(self, exc_ty, exc_val, exc_tb):
+        end = time.time()
+        print('{}: {}'.format(self.label, end - self.start))
+
+#
+#   This would be needed normally, if you dont use the decorator
+#
+##### METACLASSES
 
