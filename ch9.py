@@ -35,18 +35,16 @@ class Count(object):
     def __init__(self, mymin, mymax):
         self.mymin = mymin
         self.mymax = mymax
-        self.current = None
+        self.actual = None
 
-    # def __getattr__(self, item):
-    #         self.__dict__[item]=0
-    #         return 0
+    def __getattr__(self, item):
+            self.__dict__[item]=0
+            return 0
 
     def __getattribute__(self, item):
-        if item.startswith('cur'):
+        if item.startswith('ac'):
             raise AttributeError
         return object.__getattribute__(self, item)
-        # or you can use ---return super().__getattribute__(item)
-        # note this class subclass object
 
 
 obj1 = Count(1, 10)
@@ -116,7 +114,7 @@ import time
 from functools import wraps
 def timethis(func):
     """Decorator that reports the execution time."""
-    """annotations and stuff"""
+    """annotations and stuff __name__ __doc__ __annotations__"""
     # @wraps(func)
     def wrapper(*args, **kwargs):
         start = time.time()
@@ -167,21 +165,20 @@ def decorator2(func):
 def add(x, y):
     return x + y
 
+# .__wrapped__
 
 """Decorators that accept arguments"""
 
 from functools import wraps
 import logging
-def logged(level, name=None, message=None):
+def logged(level, message=None):
     '''
     Add logging to a function.  level is the logging
-    level, name is the logger name, and message is the
-    log message.  If name and message aren't specified,
+    level, message is the log message. If message isn't specified,
     they default to the function's module and name.
     '''
     def decorate(func):
-        logname = name if name else func.__module__
-        log = logging.getLogger(logname)
+        log = logging.getLogger(func.__module__)
         logmsg = message if message else func.__name__
 
         @wraps(func)
@@ -192,7 +189,7 @@ def logged(level, name=None, message=None):
     return decorate
 
 # Example use
-@logged(logging.DEBUG)
+@logged(logging.ERROR)
 def add(x, y):
     return x + y
 
@@ -494,5 +491,7 @@ class timethis:
         print('{}: {}'.format(self.label, end - self.start))
 
 #
-#   This would be needed normally, ig you dont use the decorator
+#   This would be needed normally, if you dont use the decorator
 #
+##### METACLASSES
+
