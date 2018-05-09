@@ -209,4 +209,20 @@ q.join()
 
 # ----
 
+# workaround GIL
+# https://web.archive.org/web/20170704003616/http://chimera.labs.oreilly.com:80/books/1230000000393/ch12.html#_problem_205
+
+# Actor, actor as generator
+# https://web.archive.org/web/20170704003616/http://chimera.labs.oreilly.com:80/books/1230000000393/ch12.html#_solution_206
+
+# Exchange, publish/subscribe
+# https://web.archive.org/web/20170704003616/http://chimera.labs.oreilly.com:80/books/1230000000393/ch12.html#_solution_207
+
+# Generators as alternative to threads
+# https://web.archive.org/web/20170704003616/http://chimera.labs.oreilly.com:80/books/1230000000393/ch12.html#_solution_208\
+
+
+
+
+
 
