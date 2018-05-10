@@ -36,11 +36,13 @@
 
 import struct
 
+from ctypes import Union
+
 
 class StructField:
-    '''
+    """
     Descriptor representing a simple structure field
-    '''
+    """
 
     def __init__(self, format, offset):
         self.format = format
@@ -50,15 +52,16 @@ class StructField:
         if instance is None:
             return self
         else:
+            # import ipdb; ipdb.set_trace()
             r = struct.unpack_from(self.format,
                                    instance._buffer, self.offset)
             return r[0] if len(r) == 1 else r
 
 
 class NestedStruct:
-    '''
+    """
     Descriptor representing a nested structure
-    '''
+    """
 
     def __init__(self, name, struct_type, offset):
         self.name = name
@@ -77,10 +80,9 @@ class NestedStruct:
 
 
 class StructureMeta(type):
-    '''
+    """
     Metaclass that automatically creates StructField descriptors
-    '''
-
+    """
     def __init__(self, clsname, bases, clsdict):
         fields = getattr(self, '_fields_', [])
         byte_order = ''
@@ -91,14 +93,9 @@ class StructureMeta(type):
                         NestedStruct(fieldname, format, offset))
                 offset += format.struct_size
             else:
-                # import ipdb; ipdb.set_trace()
-                # if isinstance(format, str):
                 if format.startswith(('<', '>', '!', '@')):
                     byte_order = format[0]
                     format = format[1:]
-                # elif isinstance(format, list):
-                #     import ipdb; ipdb.set_trace()
-
                 format = byte_order + format
                 setattr(self, fieldname, StructField(format, offset))
                 offset += struct.calcsize(format)
@@ -111,6 +108,7 @@ class Structure(metaclass=StructureMeta):
 
     @classmethod
     def from_file(cls, f):
+        # import ipdb; ipdb.set_trace()
         return cls(f.read(cls.struct_size))
 
 
@@ -129,6 +127,7 @@ class SizedRecord:
     def iter_as(self, code):
         if isinstance(code, str):
             s = struct.Struct(code)
+            # import ipdb; ipdb.set_trace()
             for off in range(0, len(self._buffer), s.size):
                 yield s.unpack_from(self._buffer, off)
         elif isinstance(code, StructureMeta):
@@ -136,6 +135,22 @@ class SizedRecord:
             for off in range(0, len(self._buffer), size):
                 data = self._buffer[off:off + size]
                 yield code(data)
+
+
+class Jpg(Structure):
+    _fields_ = [
+        ('<i', 'start'),
+        ('i', 'marker'),
+        ('i', 'app_length'),
+        ('i', 'jfif'),
+        ('i', 'jfif_format'),
+        ('i', 'res_units'),
+        ('i', 'h_res'),
+        ('i', 'v_res'),
+        ('i', 'h_px'),
+        ('i', 'v_px'),
+    ]
+
 
 class Point(Structure):
     _fields_ = [
@@ -152,12 +167,25 @@ class PolyHeader(Structure):
         ('i', 'num_polys')
     ]
 
-# class Img(Structure):
-#     _fields_ = [
-#         ('<d', 'fbyte'),
-#         (['PNG\r\n', 'dddddExif', 'dddddJFIF'], 'type'),
-#         ('i', 'num_polys')
-#     ]
+class Img(Structure):
+    _fields_ = [
+        # (['PNG\r\n', 'dddddExif', 'dddddJFIF'], 'type'),
+        ('IIIIII', 'header')
+    ]
+
+# def read_polys(filename):
+#     polys = []
+#     with open(filename, 'rb') as f:
+#         phead = PolyHeader.from_file(f)
+#         # phead = Img.from_file(f)
+#         # import ipdb; ipdb.set_trace()
+#         # print()
+#         for n in range(phead.num_polys):
+#             rec = SizedRecord.from_file(f, '<i')
+#             # import ipdb; ipdb.set_trace()
+#             poly = [p.type for p in rec.iter_as(Img)]
+#             polys.append(poly)
+#     return polys
 
 def read_polys(filename):
     polys = []
@@ -172,4 +200,5 @@ def read_polys(filename):
 
 
 polys = read_polys('polys.bin')
+# polys = read_polys('asdf.jpg')
 print(polys)

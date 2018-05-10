@@ -16,6 +16,7 @@ t.start()
 t.join()
 
 # -----
+# for extra control
 
 import time
 from threading import Thread
@@ -153,64 +154,65 @@ t2.join()
 
 # ----
 
-# Worker thread
-def worker(n, sema):
-    # Wait to be signaled
-    sema.acquire()
-    # Do some work
-    print('Working', n)
-
-# Create some threads
-sema = threading.Semaphore(0)
-nworkers = 10
-for n in range(nworkers):
-    t = threading.Thread(target=worker, args=(n, sema,))
-    t.start()
-    
-sema.release()
-
-
-# ----
-
-from queue import Queue
-from threading import Thread
-
-# A thread that produces data
-def producer(out_q):
-    while True:
-        # Produce some data
-        data = input()
-        out_q.put(data)
-
-
-# A thread that consumes data
-def consumer(in_q):
-    while True:
-        # Get some data
-        data = in_q.get()
-        if data == '0':
-            break
-        # Process the data
-        else:
-            print(str.upper(data))
-    exit()
-
-
-# Create the shared queue and launch both threads
-q = Queue()
-t1 = Thread(target=consumer, args=(q,))
-t2 = Thread(target=producer, args=(q,))
-t1.start()
-t2.start()
-t1.join()
-t2.join()
-q.join()
-
+# from queue import Queue
+# from threading import Thread
+#
+# # A thread that produces data
+# def producer(out_q):
+#     while True:
+#         # Produce some data
+#         data = input()
+#         if data == '0':
+#             break
+#         else:
+#             out_q.put(data)
+#
+# # A thread that consumes data
+# def consumer(in_q):
+#     while True:
+#         # Get some data
+#         data = in_q.get()
+#         if data == '0':
+#             break
+#         # Process the data
+#         else:
+#             print(str.upper(data))
+#     exit()
+#
+# # Create the shared queue and launch both threads
+# q = Queue()
+# t1 = Thread(target=consumer, args=(q,))
+# t2 = Thread(target=producer, args=(q,))
+# t1.start()
+# t2.start()
+# t1.join()
+# t2.join()
+# q.join()
 
 # ----
 
 # workaround GIL
 # https://web.archive.org/web/20170704003616/http://chimera.labs.oreilly.com:80/books/1230000000393/ch12.html#_problem_205
+
+# Processing pool (see below for initiazation)
+pool = None
+
+# Performs a large calculation (CPU bound)
+def some_work(args):
+    result = args ** 2
+    return result
+
+# A thread that calls the above function
+def some_thread():
+    while True:
+        ...
+        r = pool.apply(some_work, (3))
+        ...
+
+# Initiaze the pool
+if __name__ == '__main__':
+    import multiprocessing
+    pool = multiprocessing.Pool()
 
 # Actor, actor as generator
 # https://web.archive.org/web/20170704003616/http://chimera.labs.oreilly.com:80/books/1230000000393/ch12.html#_solution_206
@@ -223,6 +225,51 @@ q.join()
 
 
 
+def countdown(n):
+    while n > 0:
+        print('T-minus', n)
+        yield
+        n -= 1
+    print('Blastoff!')
+
+def countup(n):
+    x = 0
+    while x < n:
+        print('Counting up', x)
+        yield
+        x += 1
+
+from collections import deque
+class TaskScheduler:
+    def __init__(self):
+        self._task_queue = deque()
+
+    def new_task(self, task):
+        '''
+        Admit a newly started task to the scheduler
+        '''
+        self._task_queue.append(task)
+
+    def run(self):
+        '''
+        Run until there are no more tasks
+        '''
+        while self._task_queue:
+            task = self._task_queue.popleft()
+            try:
+                # Run until the next yield statement
+                next(task)
+                self._task_queue.append(task)
+            except StopIteration:
+                # Generator is no longer executing
+                pass
+
+# Example use
+sched = TaskScheduler()
+sched.new_task(countdown(10))
+sched.new_task(countdown(5))
+sched.new_task(countup(15))
+sched.run()
 
 
 
