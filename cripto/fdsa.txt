@@ -1,0 +1,9 @@
+bagaje
+priv: 11639 5125 
+publ: 11639 5965
+encr: OCXKERHTE
+
+priv: 16637 7187
+publ: 17737 3503
+encr: EEQT IJBH
+
