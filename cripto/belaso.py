@@ -43,4 +43,4 @@ def belasso_decrypt(cipher, kw):
 
     decrypted = ''.join([alph[(check_space(text[i]) - check_space(kwadapt[i])) % 27] for i in range(len(kwadapt))])
 
-    return decrypted
+    return decrypted.lower()

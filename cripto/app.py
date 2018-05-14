@@ -1,4 +1,4 @@
-import rsa
+import cripto.rsa as rsa
 from appJar import gui
 
 
