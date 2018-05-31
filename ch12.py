@@ -270,6 +270,3 @@ sched.new_task(countdown(10))
 sched.new_task(countdown(5))
 sched.new_task(countup(15))
 sched.run()
-
-
-
