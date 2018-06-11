@@ -35,7 +35,7 @@ with fileinput.input() as f_input:
 
 import getpass
 
-from pybook.cripto.belaso import *
+from cripto.belaso import *
 
 pwds = {'cristiab': 'RB HDJXRCSBYKRYXTB'}
 
