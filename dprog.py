@@ -127,11 +127,12 @@ def dpMakeChange(coin_vals, change, min_coins, coins_used):
 
 
 def printCoins(coinsUsed, change):
-   coin = change
-   while coin > 0:
-      thisCoin = coinsUsed[coin]
-      print(thisCoin)
-      coin = coin - thisCoin
+    import ipdb; ipdb.set_trace()
+    coin = change
+    while coin > 0:
+        thisCoin = coinsUsed[coin]
+        print(thisCoin)
+        coin = coin - thisCoin
 
 def main():
     amnt = 61
