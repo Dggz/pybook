@@ -36,11 +36,8 @@ for key in fulldict.keys():
 
 print('Most significant subject for average: {}: {}'.format(fmax[0], fmax[2]))
 print('Most significant subject for average: {subj}: {mark}'.format(subj=fmax[0], mark=fmax[2]))
-import ipdb
-
-ipdb.set_trace()
-import ipdb
-ipdb.set_trace()
+import ipdb; ipdb.set_trace()
+import ipdb; ipdb.set_trace()
 
 fmedie = sum(fponds) / fsuma
 # print(fmedie)

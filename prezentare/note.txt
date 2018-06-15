@@ -1,0 +1,12 @@
+#
+#
+#
+Algebra 6 7
+aNaliza 6 5
+Logica Computationala 6 7
+Fundamentele Programarii 6 8
+aSC 6 5
+Geometrie 5 5
+AG 4 6
+#
+Engleza 3 10
