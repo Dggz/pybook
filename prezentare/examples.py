@@ -22,7 +22,7 @@ a, b, c, d, e = s
 
 f, _, h, _, k = s
 
-text = 'UPPER PYTHON, lower python, Mixed Python'
+text = 'one PYTHON, two python, three Python'
 re.findall('python', text, flags=re.IGNORECASE)
 re.sub('python', 'snake', text, flags=re.IGNORECASE)
 

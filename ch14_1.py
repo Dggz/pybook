@@ -65,4 +65,19 @@ def func(x, y, logfile=None, debug=False):
          warnings.warn('logfile argument deprecated', DeprecationWarning)
     return x + y
 
+# sample.py
+
+def func(n):
+    return n + 10
+
+func('Hello')
+# bash % python3 -i sample.py
+
+
+#
+#
+# Show ipdb instead of pdb
+# And maybe pycharm builtin debugger
+#
+#
 
