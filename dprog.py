@@ -1,10 +1,9 @@
 import time
-from functools import wraps
-
+import functools
 
 # def timethis(func):
 #     """Decorator that reports the execution time."""
-#     @wraps(func)
+#     @functools.wraps(func)
 #     def wrapper(*args, **kwargs):
 #         start = time.time()
 #         result = func(*args, **kwargs)
@@ -26,6 +25,7 @@ from functools import wraps
 #     return fib(n)
 #
 #
+# # printing fibonaci
 # def pfib(n):
 #     if n <= 2:
 #         print('fib({})'.format(n))
@@ -65,8 +65,15 @@ from functools import wraps
 #         return 1
 #     else:
 #         return mfib(n-1) + mfib(n-2)
-
-
+#
+#
+# @functools.lru_cache(maxsize=None)  # functools
+# def fibonacci(n):
+#     if n < 2: return n
+#     return fibonacci(n - 1) + fibonacci(n - 2)
+#  # max recursion issue
+#
+#
 # def recMC(coinValueList, change):
 #     minCoins = change
 #     if change in coinValueList:
@@ -106,13 +113,13 @@ from functools import wraps
 # print(recDC(coins, val, init_ans))
 
 
-def dpMakeChange(coin_vals, change, min_coins, coins_used):
+def dp_make_change(coin_vals, change, min_coins, coins_used):
     for cents in range(change + 1):
-        asdf = locals()
-        for i in asdf:
-            if i not in ('ipdb', 'asdf'):
-                print(i, ': ', asdf[i])
-        import ipdb;ipdb.set_trace()
+        # asdf = locals()
+        # for i in asdf:
+        #     if i not in ('ipdb', 'asdf'):
+        #         print(i, ': ', asdf[i])
+        # import ipdb;ipdb.set_trace()
         coinCount = cents
         newCoin = 1
         for j in [c for c in coin_vals if c <= cents]:
@@ -122,12 +129,12 @@ def dpMakeChange(coin_vals, change, min_coins, coins_used):
         min_coins[cents] = coinCount
         coins_used[cents] = newCoin
 
-    # import ipdb; ipdb.set_trace()
+    import ipdb; ipdb.set_trace()
     return min_coins[change]
 
 
 def printCoins(coinsUsed, change):
-    import ipdb; ipdb.set_trace()
+    # import ipdb; ipdb.set_trace()
     coin = change
     while coin > 0:
         thisCoin = coinsUsed[coin]
@@ -141,7 +148,7 @@ def main():
     coinCount = [0] * (amnt + 1)
 
     print("Making change for", amnt, "requires")
-    print(dpMakeChange(clist, amnt, coinCount, coinsUsed), "coins")
+    print(dp_make_change(clist, amnt, coinCount, coinsUsed), "coins")
     print("They are:")
     printCoins(coinsUsed, amnt)
     print("The used list is as follows:")
