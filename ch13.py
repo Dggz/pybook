@@ -35,9 +35,10 @@ with fileinput.input() as f_input:
 
 import getpass
 
-from cripto.belaso import *
+from cripto.belaso import belasso_decrypt
 
-pwds = {'cristiab': 'RB HDJXRCSBYKRYXTB'}
+# parolafoartesigura
+pwds = {'cbaciu': 'JJUPND XDSVHMRJVTD'}
 
 def svc_login(user, passwd):
     if passwd == belasso_decrypt(pwds[user], user[::-1]):
