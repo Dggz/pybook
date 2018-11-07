@@ -19,16 +19,15 @@ file_print("\nPret pe seara: " + str(round(s1)), f)
 p1 = int(input("\nPersoane seara 1: "))
 p2 = int(input("\nPersoane seara 2: "))
 p3 = int(input("\nPersoane seara 3: "))
+
 f.write("\nPersoane seara 1: {}"
         "\nPersoane seara 2: {}"
         "\nPersoane seara 3: {}\n".format(p1, p2, p3))
 # print('---input done---')
 
-s1, s2 , s3 = round(s1/p1), \
-              round(s1/p2), \
-              round(s1/p3)
+s1, s2 , s3 = round(s1/p1), round(s1/p2), round(s1/p3)
 
-tbl  = "\nPret seara 1/pers: " + str(s1)
+tbl = "\nPret seara 1/pers: " + str(s1)
 tbl += "\nPret seara 2/pers: " + str(s2)
 tbl += "\nPret seara 3/pers: " + str(s3)
 file_print(tbl, f)
@@ -37,8 +36,10 @@ file_print(tbl, f)
 s2ind = s1 + s2 + 2
 s3ind = s2ind + s3
 
-final = '\nPret pt o seara: {}\n'.format(s1)
-final += '\nPret pt 2 seri: {}\n'.format(s2ind)
+# import ipdb; ipdb.set_trace()
+# final = '\nPret pt o seara: {}\n'.format(s1)
+# final += '\nPret pt 2 seri: {}\n'.format(s2ind)
+final = '\nPret pt 2 seri: {}\n'.format(s2ind)
 final += '\nPret pt 3 seri: {}\n'.format(s3ind)
 file_print(final, f)
 print('---program done---')
