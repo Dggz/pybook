@@ -5,7 +5,7 @@ def countdown(n):
     while n > 0:
         print('T-minus', n)
         n -= 1
-        time.sleep(0.5)
+        time.sleep(0.2)
     return
 
 
@@ -31,7 +31,7 @@ class CountdownTask:
         while self._running and n > 0:
             print('T-minus', n)
             n -= 1
-            time.sleep(0.5)
+            time.sleep(0.2)
 
 c = CountdownTask()
 t = Thread(target=c.run, args=(10,))
@@ -75,7 +75,7 @@ def countdown(n, started_evt):
     while n > 0:
         print('T-minus', n)
         n -= 1
-        time.sleep(0.5)
+        time.sleep(0.2)
 
 # Create the event object that will be used to signal startup
 started_evt = Event()
@@ -133,14 +133,14 @@ ptimer.start()
 def countdown(nticks):
     while nticks > 0:
         ptimer.wait_for_tick()
-        print('T-minus', nticks)
+        print('\nT-minus', nticks)
         nticks -= 1
 
 def countup(last):
     n = 0
     while n < last:
         ptimer.wait_for_tick()
-        print('Counting', n)
+        print('\nCounting', n)
         n += 1
 
 t1 = threading.Thread(target=countdown, args=(10,))
@@ -203,16 +203,16 @@ def some_work(args):
     return result
 
 # A thread that calls the above function
-def some_thread():
-    while True:
-        ...
-        r = pool.apply(some_work, (3))
-        ...
+# def some_thread():
+#     while True:
+#         r = pool.map(some_work, (3, 4, 5))
+#         print(r)
 
 # Initiaze the pool
 if __name__ == '__main__':
     import multiprocessing
     pool = multiprocessing.Pool()
+    pool.map(some_work, [3, 4, 5])
 
 # Actor, actor as generator
 # https://web.archive.org/web/20170704003616/http://chimera.labs.oreilly.com:80/books/1230000000393/ch12.html#_solution_206
