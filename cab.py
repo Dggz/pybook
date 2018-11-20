@@ -27,13 +27,13 @@ f.write("\nPersoane seara 1: {}"
         "\nPersoane seara 3: {}\n".format(p3 + p2, p3 + p2, p3 + p1))
 # print('---input done---')
 
-s1, s2, s3 = round(s1/(p3 + p2)), round(s1/(p3 + p2)), round(s1/(p3 + p1))
+s1, s2, s3 = round(s1/(p3 + p2) + 1), round(s1/(p3 + p2)), round(s1/(p3 + p1))
 
 tbl = "\nPret seara 1/pers: " + str(s1)
 tbl += "\nPret seara 2/pers: " + str(s2)
 tbl += "\nPret seara 3/pers: " + str(s3)
 # f.write(tbl)
-file_print(tbl, f)
+# file_print(tbl, f)
 # print('---intermediary done---')
 
 
@@ -42,12 +42,15 @@ s2ind = s1 + s2
 
 
 s2ind = int(round(s2ind / 2 * 2.25))
-
+rounded = round(s2ind, -1)
+s2ind = rounded if s2ind < rounded else rounded + 10
 # max_s = (p1 + p2 + p3) / 3
 
 c2s = p2
 
-s3ind = int(round((pret_cabana - (c2s * s2ind + p1 * s1 )) / p3))
+s3ind = int((pret_cabana - (c2s * s2ind + p1 * s1 )) / p3)
+s3rounded = round(s3ind, -1)
+s3ind = s3rounded if s3ind < s3rounded else s3rounded + 10
 
 cap = 550 # s2ind + s1 * 1.5
 
@@ -56,8 +59,8 @@ if s3ind > cap:
     rest = pret_cabana - p3 * s3ind - p1 * s1
     rounded = round(rest / p2, -1)
     # import ipdb; ipdb.set_trace()
-    # s2ind = rounded if rest / p2 < rounded else rounded + 10
-    s2ind = rest / (p2)
+    s2ind = rounded if rest / p2 < rounded else rounded + 10
+    # s2ind = rest / (p2)
 
 
 # import ipdb; ipdb.set_trace()
