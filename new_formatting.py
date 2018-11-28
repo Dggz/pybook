@@ -56,11 +56,12 @@ print(f"{name.lower()} is funny.")
 
 print(f"2 * 37")
 
+
 class Comedian:
-    def __init__(self, first_name, last_name, age):
-        self.first_name = first_name
-        self.last_name = last_name
-        self.age = age
+    def __init__(self, com_fn, com_ln, com_age):
+        self.first_name = com_fn
+        self.last_name = com_ln
+        self.age = com_age
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} is {self.age}."
