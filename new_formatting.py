@@ -54,7 +54,7 @@ print(f"Hello, {first_name} {last_name}. You are {age}. You are a {profession}."
 
 print(f"{name.lower()} is funny.")
 
-print(f"2 * 37")
+print(f"{2 * 37}")
 
 
 class Comedian:
