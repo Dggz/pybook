@@ -44,6 +44,9 @@ age = 74
 name = "Eric"
 print(f"Hello, {name}. You are {age}.")
 
+# Quote escape
+print(f"The \"comedian\" is {name}, aged {age}.")
+
 age = 74
 first_name = "Eric"
 last_name = "Idle"
