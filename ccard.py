@@ -1,10 +1,11 @@
-debt = 5500
+debt = 5950
 month_plan = 170 * 3 + 27 + 38 + 234 + 206 + 470 + 18 + 754
 total_plan = 750 + 240 + 470 + 410 + 465 + 185 + 130 + 510 * 3
 
+known_monthly = 0 # 3850
 out_of_plan = debt - total_plan
 
-ppmonth = month_plan + out_of_plan
+ppmonth = month_plan + out_of_plan if not known_monthly else known_monthly
 
 next_debt = debt - ppmonth
 
