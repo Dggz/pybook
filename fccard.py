@@ -11,6 +11,8 @@ with open(file_name, 'r') as inp:
 out_of_plan = debt - total_plan
 
 ppmonth = month_plan + out_of_plan if not known_monthly else known_monthly
+if out_of_plan < 0:
+    ppmonth -= out_of_plan
 
 next_debt = debt - ppmonth
 
