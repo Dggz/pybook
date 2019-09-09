@@ -11,7 +11,7 @@ def round_ten(number):
 
 f = open('cabana.txt', 'w')
 
-pret_cabana = 8500 # pret_cabana = int(input("\nPret cabana: ")) # ex: 6000
+pret_cabana = 1500 # pret_cabana = int(input("\nPret cabana: ")) # ex: 6000
 s1 = float(pret_cabana / 3)
 f.write("\nPret cabana: {}".format(pret_cabana))
 file_print("\nPret pe seara: " + str(round(s1)), f)
