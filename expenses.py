@@ -16,5 +16,6 @@ print()
 
 left = start_money - sum(expenses.values())
 
-print("\nDaily budget:", int(left / 31))
-print("Daily budget to save up 20%:", int(.8 * left / 31))
+print("\nMoney left:", int(left))
+print("Daily budget:", int(left / 31))
+print("Daily budget to save up 20% ({}):".format(int(.2 * left)), int(.8 * left / 31))
