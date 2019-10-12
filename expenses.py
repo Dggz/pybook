@@ -1,5 +1,6 @@
 import csv
 from sys import argv
+from datetime import datetime, date, timedelta
 
 file_name = argv[1]
 
@@ -16,6 +17,14 @@ print()
 
 left = start_money - sum(expenses.values())
 
+today = datetime.now()
+final_date = final = datetime(2019, datetime.now().month + 1, 6)
+remaining_days = (final_date - today).days + 1
+print(remaining_days)
+
 print("\nMoney left:", int(left))
-print("Daily budget:", int(left / 31))
-print("Daily budget to save up 20% ({}):".format(int(.2 * left)), int(.8 * left / 31))
+print("Daily budget:", int(left / remaining_days))
+print(
+    "Daily budget to save up 20% ({}):".format(int(.2 * left)),
+    int(.8 * left / remaining_days)
+)
