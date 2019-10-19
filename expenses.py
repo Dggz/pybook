@@ -21,10 +21,17 @@ today = datetime.now()
 final_date = final = datetime(2019, datetime.now().month + 1, 6)
 remaining_days = (final_date - today).days + 1
 
+daily_budget = int(left / remaining_days)
+if .8 * daily_budget > 30:
+    print("\nBudget is over 30/day.\n"
+          "This will result in {} in savings".format(
+              left - 30 * remaining_days)
+          )
+
 print("\nExpenses:", int(expense_amount))
 print("Money left:", int(left))
-print("Daily budget:", int(left / remaining_days))
+print("Daily budget:", daily_budget)
 print(
     "Daily budget to save up 20% ({}):".format(int(.2 * left)),
-    int(.8 * left / remaining_days)
+    int(.8 * daily_budget)
 )
