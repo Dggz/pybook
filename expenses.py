@@ -27,7 +27,7 @@ if .8 * daily_budget > 30:
           "This will result in {} in savings".format(
               left - 30 * remaining_days)
           )
-
+print("\nRemaining days:", remaining_days)
 print("\nExpenses:", int(expense_amount))
 print("Money left:", int(left))
 print("Daily budget:", daily_budget)
