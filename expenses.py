@@ -18,7 +18,10 @@ expense_amount = sum(expenses.values())
 left = start_money - expense_amount
 
 today = datetime.now()
-final_date = final = datetime(2019, datetime.now().month + 1, 6)
+if today.day < 5:
+    final_date = datetime(2019, datetime.now().month, 6)
+else:
+    final_date = datetime(2019, datetime.now().month + 1, 6)
 remaining_days = (final_date - today).days + 1
 
 daily_budget = int(left / remaining_days)
