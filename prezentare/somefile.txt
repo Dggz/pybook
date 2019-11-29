@@ -3,4 +3,5 @@ linia 2
 linia 3
 asdf 4
 ksdfg 5
-linia 6
+python
+linia 7

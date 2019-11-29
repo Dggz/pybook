@@ -1,6 +1,4 @@
 
-import re
-
 p = 4, 5
 p = (4, 5)
 x, y = p
@@ -21,6 +19,9 @@ s = 'Hello'
 a, b, c, d, e = s
 
 f, _, h, _, k = s
+
+import re
+
 
 text = 'one PYTHON, two python, three Python'
 re.findall('python', text, flags=re.IGNORECASE)
