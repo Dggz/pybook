@@ -266,10 +266,12 @@ for y_pos in range(0, y_res, 8):
 del y_vals, cb_vals, cr_vals
 
 tasks = x_res * y_res // 64
+
+
 def pre():
     print("blana stuff")
     for i in range(0, tasks, tasks // 4):
-    # for i in range(0, tasks, 4):
+        # for i in range(0, tasks, 4):
         p = multiprocessing.Process(target=pre_process_blocks, args=(i, tasks // 4))
         # p = multiprocessing.Process(target=process_blocks, args=(i, 4))
         p.start()

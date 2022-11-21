@@ -347,6 +347,7 @@ def typeassert(*ty_args, **ty_kwargs):
 def add(x, y):
     return x + y
 
+
 @typeassert(int, z=int)
 def spam(x, y, z=42):
     print(x, y, z)

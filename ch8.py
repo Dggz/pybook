@@ -25,13 +25,16 @@ formats_ = {
     'dmy' : '{d.day}/{d.month}/{d.year}'
     }
 
+
 # if you have a lot of instances use __slots__
 class Date:
     __slots__ = ['year', 'month', 'day']
+
     def __init__(self, year, month, day):
         self.year = year
         self.month = month
         self.day = day
+        self.hour = 1
 
     def __format__(self, code):
         if code == '':
@@ -42,6 +45,7 @@ class Date:
 #
 #  Defineste cum va arata o instanta cand e un argument a functiei format
 #
+
 
 dt = Date(2012, 12, 21)
 format(dt)
@@ -244,7 +248,7 @@ Downside on documentation and IDE help
 
 class Structure:
     # Class variable that specifies expected fields
-    _fields= []
+    _fields = []
     def __init__(self, *args):
         if len(args) != len(self._fields):
             raise TypeError('Expected {} arguments'.format(len(self._fields)))
@@ -348,7 +352,7 @@ class OpenConnection(Connection):
         print('reading')
 
     def write(self, data):
-        print('writing')
+        print(f'writing {data}')
 
     def open(self):
         raise RuntimeError('Already open')

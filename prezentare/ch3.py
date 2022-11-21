@@ -176,6 +176,5 @@ def get_previous_byday(dayname, start_date=None):
     return target_date
 
 
-import ipdb[]
-ipdb.set_trace()
+import ipdb;ipdb.set_trace()
 print()
