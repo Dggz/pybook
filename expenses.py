@@ -2,7 +2,7 @@ import csv
 from sys import argv
 from datetime import datetime, date, timedelta
 
-file_name = argv[1]
+file_name = "expenses" # argv[1]
 
 
 with open(file_name, 'r') as inp:
@@ -10,7 +10,7 @@ with open(file_name, 'r') as inp:
     prices = (row for row in csv.reader(lines) if len(row) == 2)
     expenses = {domain: int(amount) for domain, amount in prices}
 
-start_money = int(input("How much money do you have?: "))  # 2000
+start_money = 2500 # int(input("How much money do you have?: "))  # 2000
 print()
 
 [print(dom, amount) for dom, amount in expenses.items()]
@@ -18,10 +18,12 @@ expense_amount = sum(expenses.values())
 left = start_money - expense_amount
 
 today = datetime.now()
-if today.day < 5:
-    final_date = datetime(2019, datetime.now().month, 6)
+if (today.year == 2023 and today.month == 8 and today.day < 14):
+    final_date = datetime(today.year, datetime.now().month + 1, 15)
+elif today.day < 14:
+    final_date = datetime(today.year, datetime.now().month, 15)
 else:
-    final_date = datetime(2019, datetime.now().month + 1, 6)
+    final_date = datetime(today.year, datetime.now().month + 1, 15)
 remaining_days = (final_date - today).days + 1
 
 daily_budget = int(left / remaining_days)
